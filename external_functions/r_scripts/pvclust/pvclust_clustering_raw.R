@@ -1,0 +1,52 @@
+# Packages load
+library("R.matlab")
+library("pvclust")
+library("matlab")
+
+
+# System arguments
+args <- commandArgs(trailingOnly=TRUE) # Expect directory of input .mat, name of input .mat, directory of output .mat and name of output .mat
+
+# Variables
+nc <- integer(30)
+fi_path <- file.path(args[1],args[2])
+fo_path <- file.path(args[3],args[4])
+Y <- readMat(fi_path)
+Y <- Y[[1]]
+clust<-list()
+tmp<-list()
+size_k<-nrow(Y)
+n<-floor(size_k/2)
+x<-Y
+#d<-as.dist(x)
+#x <- cmdscale(d,n)
+x<-as.data.frame(x)
+rownames(x)<-seq(1,size_k,1)
+
+# Pvclust clustering
+clust<-pvclust(x,method.dist="cor", nboot=10000,parallel= TRUE,r=seq(0.2,1.8,by=.025))
+tmp<-pvpick(clust,alpha=0.95)$clusters
+
+
+# Fetch clusters
+tmp3<-matrix(0,size_k,size_k)
+
+for (j in 1:length(tmp)){
+  
+  tmp2<-c(tmp[[j]],rep(0,size_k-length(tmp[[j]])))
+  tmp3[,j]<-tmp2
+  
+}
+
+clust_pick<-matrix(as.double(tmp3),size_k,size_k)
+idx_missing<-which(!(seq(1,size_k,1) %in% clust_pick))
+if (length(idx_missing)){
+  for (l in 1:length(idx_missing)){
+    clust_pick[1,j+l]<-idx_missing[l]
+  }
+}
+
+
+
+# Output
+writeMat(fo_path,pvclust_clust=clust_pick)
