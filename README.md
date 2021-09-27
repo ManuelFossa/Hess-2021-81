@@ -23,7 +23,7 @@ II) Structure
         - Main script for computations
       - qpt_clustering_plot.m
         - Script for plots
-  - Two .mat files in data/matlab/ contain results from computations at both monthly and annual time steps:
+  - Two mat files in data/matlab/ contain results from computations at both monthly and annual time steps:
       . wks_qpt_clustering_for_cmi_monthly_11.mat
       - wks_qpt_clustering_for_cmi_10_annual.mat
 
