@@ -23,9 +23,10 @@ II) Structure
         - Main script for computations
       - qpt_clustering_plot.m
         - Script for plots
-  - Two mat files in data/matlab/ contain results from computations at both monthly and annual time steps:
-      - wks_qpt_clustering_for_cmi_monthly_11.mat
-      - wks_qpt_clustering_for_cmi_10_annual.mat
+III) Data
+  - Data must be obtained externally:
+    -  Safran Precipitation and Temperature dataset must be obtained from www.meteofrance.fr
+    -  Discharge data is available from http://www.hydro.eaufrance.fr/
 
 
         
